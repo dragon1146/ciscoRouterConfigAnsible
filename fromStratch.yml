@@ -1,0 +1,27 @@
+---
+- name: play 1 basic router config
+  hosts: r1
+  connection: local
+  gather_facts: no
+
+  vars:
+    cli:
+      username: tison
+      password: cisco12345
+
+  tasks:
+    - name: task 1 config interface 0/0
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: int f0/0
+        lines: 
+          - ip address 192.168.12.1 255.255.255.0
+
+      register: print_output
+
+
+    - name: task 2 print output
+      debug:
+        var: print_output
+
